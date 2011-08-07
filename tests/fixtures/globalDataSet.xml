@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <products
+        id   = "1"
+        name = "Black/White Product"
+    />
+    <products
+        id   = "2"
+        name = "White/Grey Product"
+    />
+    <products
+        id   = "3"
+        name = "Black Product"
+    />
+
+    <product_colors
+        product_id   = "1"
+        color        = "black"
+    />
+    <product_colors
+        product_id   = "1"
+        color        = "white"
+    />
+    <product_colors
+        product_id   = "2"
+        color        = "white"
+    />
+    <product_colors
+        product_id   = "2"
+        color        = "grey"
+    />
+    <product_colors
+        product_id   = "3"
+        color        = "black"
+    />
+</dataset>
