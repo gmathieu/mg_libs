@@ -7,6 +7,6 @@
         <var name="DB_DSN" value="localhost" />
         <var name="DB_USER" value="root" />
         <var name="DB_PASSWD" value="root" />
-        <var name="DB_DBNAME" value="mg_libs.testing" />
+        <var name="DB_DBNAME" value="internal.mg_libs.testing" />
     </php>
 </phpunit>
