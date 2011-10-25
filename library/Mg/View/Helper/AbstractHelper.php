@@ -24,6 +24,15 @@ class Mg_View_Helper_AbstractHelper extends Zend_View_Helper_Abstract
         $this->_attributes[$name] = $value;
     }
 
+    public function addAttributes($attributes)
+    {
+        if (is_array($attributes)) {
+            foreach ($attributes as $key => $value) {
+                $this->addAttribute($key, $value);
+            }
+        }
+    }
+
     public function setAttribute($name, $value)
     {
         $this->_attributes = array();
