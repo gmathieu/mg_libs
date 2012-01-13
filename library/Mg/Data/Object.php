@@ -199,6 +199,16 @@ class Mg_Data_Object
     }
 
     /**
+     * Returns the column/value data as an array.
+     * 
+     * @return array
+     */
+    public function toJson()
+    {
+        return $this->toArray();
+    }
+
+    /**
      * Transform a key name from the user-specified form
      * to the physical form used in the _data array.
      *
