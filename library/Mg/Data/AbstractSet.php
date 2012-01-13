@@ -118,15 +118,8 @@ abstract class Mg_Data_AbstractSet implements \SeekableIterator, \Countable, \Ar
             return null;
         }
 
-        // do we already have a row object for this position?
-        if (empty($this->_instantiatedDataSet[$this->_pointer])) {
-            // call intializer and store result
-            $dataObjectInitializer = $this->_dataObjectInitializer;
-            $this->_instantiatedDataSet[$this->_pointer] = $dataObjectInitializer($this->_data[$this->_pointer]);
-        }
-
-        // return the row object
-        return $this->_instantiatedDataSet[$this->_pointer];
+        // return instantiated object
+        return $this->_loadAndReturnRow($this->_pointer);
     }
 
     /**
@@ -259,14 +252,15 @@ abstract class Mg_Data_AbstractSet implements \SeekableIterator, \Countable, \Ar
     {
         $key = $this->key();
         try {
-            $this->seek($position);
-            $row = $this->current();
+            $row = $this->_loadAndReturnRow($position);
         } catch (SetException $e) {
             throw new SetException('No row could be found at position ' . (int) $position, 0, $e);
         }
-        if ($seek == false) {
-            $this->seek($key);
+
+        if ($seek == true) {
+            $this->seek($position);
         }
+
         return $row;
     }
 
@@ -279,11 +273,43 @@ abstract class Mg_Data_AbstractSet implements \SeekableIterator, \Countable, \Ar
      */
     public function toArray()
     {
-        // @todo This works only if we have iterated through
-        // the result set once to instantiate the rows.
-        foreach ($this->_instantiatedDataSet as $i => $row) {
-            $this->_data[$i] = $row->toArray();
+        $returnArray = array();
+
+        foreach ($this->_data as $i => $data) {
+            $returnArray[$i] = $this->_loadAndReturnRow($i)->toArray();
         }
-        return $this->_data;
+
+        return $returnArray;
+    }
+
+    /**
+     * Returns all data as an array.
+     *
+     * Updates the $_data property with current row object values.
+     *
+     * @return array
+     */
+    public function toJson()
+    {
+        $returnArray = array();
+
+        foreach ($this->_data as $i => $data) {
+            $returnArray[$i] = $this->_loadAndReturnRow($i)->toJson();
+        }
+
+        return $returnArray;
+    }
+
+    protected function _loadAndReturnRow($position)
+    {
+        // do we already have a row object for this position?
+        if (empty($this->_instantiatedDataSet[$position])) {
+            // call intializer and store result
+            $dataObjectInitializer = $this->_dataObjectInitializer;
+            $this->_instantiatedDataSet[$position] = $dataObjectInitializer($this->_data[$position]);
+        }
+
+        // return the row object
+        return $this->_instantiatedDataSet[$position];
     }
 }
