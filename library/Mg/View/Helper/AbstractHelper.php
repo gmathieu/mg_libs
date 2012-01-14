@@ -33,6 +33,15 @@ class Mg_View_Helper_AbstractHelper extends Zend_View_Helper_Abstract
         }
     }
 
+    public function getAttribute($key, $defaultValue = null)
+    {
+        if (isset($this->_attributes[$key]) && null !== $this->_attributes[$key]) {
+            return $this->_attributes[$key];
+        } else {
+            return $defaultValue;
+        }
+    }
+
     public function setAttribute($name, $value)
     {
         $this->_attributes = array();
