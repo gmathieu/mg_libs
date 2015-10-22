@@ -1,5 +1,4 @@
-SETUP
-=====
+# Setup
 
 * requires phpunit to be installed
 * ln -s Zend Framework library into library/Zend
